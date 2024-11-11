@@ -1,0 +1,6 @@
+beautifulsoup4==4.11.2
+pandas==1.5.3
+pyarrow==11.0.0
+webdriver-manager==4.0.1
+seleniumbase
+webdriver-manager

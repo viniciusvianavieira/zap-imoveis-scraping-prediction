@@ -1,0 +1,366 @@
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium import webdriver
+from functools import partial
+from random_user_agent.user_agent import UserAgent
+from tqdm import tqdm 
+from bs4 import BeautifulSoup
+import requests
+import re
+import time
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import pandas as pd
+from selenium.webdriver.common.by import By
+from loguru import logger
+import concurrent.futures
+import json
+import numpy as np
+import datetime
+import pytz
+
+def _get_driver_webscraping():
+    '''
+        ### Objetivo
+        * Função para retornar um driver do selenium configurado para webscraping.
+    '''
+    chrome_options = Options()
+    #chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    chrome_options.add_argument('--log-level=3')
+    chrome_options.add_argument('--disable-gpu')
+    chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    chrome_options.add_experimental_option('useAutomationExtension', False)
+
+    driver = webdriver.Chrome(service=Service(executable_path=ChromeDriverManager().install()), options=chrome_options)
+
+    return driver
+
+def _get_headers_webscraping():
+    
+    ua = UserAgent()
+    user_agents = ua.get_random_user_agent()
+    headers = {
+        'user-agent': user_agents.strip(), 
+        'encoding':'utf-8',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'none',
+        'Sec-Fetch-User': '?1',
+        'DNT': '1',  # Do Not Track Request Header
+    }
+
+    return headers
+
+def _number_of_pages(base_url, transaction, type, local):
+    '''
+        ### Objetivo
+        * Função para retornar o total de páginas disponível com base na localidade e no tipo e subtipo escolhidos.
+        ### Parâmetros
+        #### Transação: 
+            * Possui as opções ['aluguel', 'venda'].
+        #### Tipo: 
+            * RESIDENCIAL
+                * apartamentos
+                * studio
+                * quitinetes
+                * casas
+                * sobrados
+                * casas-de-condominio
+                * casas-de-vila
+                * cobertura
+                * flat
+                * loft
+                * terrenos-lotes-condominios
+                * fazendas-sitios-chacaras
+            * COMERCIAL
+                * loja-salao
+                * conjunto-comercial-sala
+                * casa-comercial
+                * hoteis-moteis-pousadas
+                * andares-lajes-corporativas
+                * predio-inteiro
+                * terrenos-lotes-comerciais
+                * galpao-deposito-armazem
+                * box-garagem
+        #### Local: 
+            * {uf}+{cidade} -> o nome do estado é separado do nome da cidade pelo sinal de +. O nome da cidade, caso tenha espaços, deve ser separado com -
+            * Ex: sp+sao-paulo
+    '''
+    
+    headers = _get_headers_webscraping()
+    url = f'{base_url}/{transaction}/{type}/{local}/?transacao={transaction}&page=1'
+    
+    driver = _get_driver_webscraping()
+    driver.implicitly_wait(10)
+    
+    try:
+
+        driver.get(url)
+
+        # Obtenção do total de imóveis disponíveis na url analisada
+        soup = BeautifulSoup(driver.page_source, 'html.parser')
+        res = soup.find('div', {"class":"result-wrapper__title"}).text # listing-wrapper__title para result-wrapper__title em 22.11.23
+
+        if res:
+            properties = int(re.sub('[^0-9]','',res))
+            properties_page = properties//100 if properties//100 > 1 else 1
+            logger.info(f"Total de imóveis disponíveis na url {url}: {properties}")
+        else:
+            properties = None
+            properties_page = None
+            logger.warning(f"Não foi possível obter o total de imóveis disponíveis na url {url}")
+
+        resultado = {
+            'Parametros': {'Transacao': transaction, 'Tipo': type, 'Local': local},
+            'Requisicao': {'Status': driver.execute_script("return document.readyState") == "complete"},
+            'Imóveis': properties, 
+            'Páginas': properties_page
+        }
+
+        # Retornando possível quantidade de páginas (em geral, cada página tem aproximadamente 100 imóveis)
+        return resultado
+    
+    except Exception as e:
+        
+        logger.error(e)
+        
+        r = requests.get(url, headers = headers)
+        resultado = {
+            'Parametros': {'Transacao': transaction, 'Tipo': type, 'Local': local},
+            'Requisicao': {'Status': r.status_code, 'Reason': r.reason, 'OK': r.ok},
+            'Imóveis': None,
+            'Páginas': None
+        }
+
+        return resultado
+
+def _get_html_with_many_cards(base_url, transaction, type, local, paginas):
+
+    # browser
+
+    browser = _get_driver_webscraping()
+
+    browser.get(f'{base_url}/{transaction}/{type}/{local}/?transacao={transaction}&pagina={paginas}')
+    print(f'{base_url}/{transaction}/{type}/{local}/?transacao={transaction}&pagina={paginas}')
+            
+    time.sleep(2)
+
+    # Rola até o fim da página para que todos os cards apareçam
+    total_height = int(browser.execute_script("return document.body.scrollHeight"))
+    n = 1
+
+    while n < total_height:
+        browser.execute_script(f"window.scrollTo(0, {n});")
+        n += 90
+        total_height = int(browser.execute_script("return document.body.scrollHeight"))
+
+    time.sleep(2)
+
+    resultado = browser.find_element(By.XPATH, '//*')
+    source_code = resultado.get_attribute("innerHTML")
+
+    browser.quit()
+
+    return source_code
+
+def _apply_functions_in_parallel_to_webscraping(list_use_in_function, function_to_apply, name_file, key_name, workers=3, args=None):
+
+    if args is None: args = []
+    info_pages = []
+    erro_pages = {}
+
+    
+    # Função para salvar os resultados em Parquet
+    def save_results():
+        # Convertendo o HTML para um DataFrame e salvando como Parquet
+        df_html = pd.DataFrame(info_pages)
+        df_html.to_parquet(f"{name_file}.parquet", index=False)
+
+        # Salvando os erros em formato Parquet
+        df_erros = pd.DataFrame(list(erro_pages.items()), columns=[key_name, 'erro'])
+        df_erros.to_parquet(f"{name_file}_erros.parquet", index=False)
+
+    print(args)
+    lista_parametros = args
+    # Executando as requisições em paralelo
+    with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
+        items = {executor.submit(function_to_apply, *args, item): item for item in list_use_in_function}
+
+        # Usando tqdm para acompanhar o progresso
+        for future in tqdm(concurrent.futures.as_completed(items), total=len(list_use_in_function), desc=f"Processando funções"):
+            item = items[future]
+            try:
+                resultado = future.result()
+                info_pages.append({f"{key_name}": item, "content": resultado})
+            except Exception as exc:
+                erro_pages[item] = str(exc)
+                print(f'Erro na página {item}: {exc}')
+
+            # Salva os resultados intermediários após cada execução
+            save_results()
+
+    return info_pages, erro_pages
+
+# Função para ler os arquivos Parquet
+def read_results(name_file: str, key_name: str = 'url_imovel'):
+    try:
+        # Lendo os resultados de html_pagina e erro_pagina
+        html_pages_df = pd.read_parquet(f"{name_file}.parquet")
+        erro_pages_df = pd.read_parquet(f"{name_file}_erros.parquet")
+
+        # Convertendo os DataFrames de volta para listas/dicionários
+        html_pages = html_pages_df.to_dict(orient="records")
+        erro_pages = dict(zip(erro_pages_df[key_name], erro_pages_df['erro']))
+
+        return html_pages, erro_pages
+
+    except FileNotFoundError:
+        print("Arquivo não encontrado.")
+        return [], {}
+
+def _read_json_file(file_name):
+    with open(file_name, "r") as f:
+        try:
+            data_list = json.load(f)  # Carrega o conteúdo diretamente
+            logger.success("Dados Listas Processados")  # Exibe ou processa a lista de dicionários
+        except json.JSONDecodeError as e:
+            logger.error(f"Erro de decodificação JSON: {e}")
+    
+    return data_list
+
+def _extract_data_in_html_for_page_with_many_cards(dados_lista):
+
+    data_list = []
+
+    for pagina, html in enumerate(dados_lista):
+
+        soup = BeautifulSoup(html['conteudo'], 'html.parser')
+        all_results = soup.find('div', {"class":"listing-wrapper__content"})
+
+        try:
+            for anuncio_pagina, result in enumerate(all_results):
+                
+                # id do imóvel
+                try:
+                    id = result.find_all('a', class_='ListingCard_result-card__Pumtx')[0].get('data-id') 
+                except:
+                    id = np.nan
+
+                # URL
+                try:
+                    url_imo = result.find_all('a', class_='ListingCard_result-card__Pumtx')[0].get('href')
+                except:
+                    url_imo = np.nan
+
+                # Se é destaque ou nao
+                try:
+                    destaque = result.find('div',{'class':'l-tag-card__content'}).text
+                    destaque.replace('\n','')
+                except:
+                    destaque = np.nan
+
+                # Titulo/Bairro
+                try:
+                    bairro = result.find_all('section', class_='card__location overflow-hidden')[0].find('h2').text
+                except:
+                    bairro = np.nan
+
+                # Endereço
+                try:
+                    endereco = result.find_all('section', class_='card__location overflow-hidden')[0].find('p').text
+                except:
+                    endereco = np.nan
+
+                # Descricao
+                try:
+                    descricao = result.find_all('p', class_='ListingCard_card__description__slBTG')[0].text
+                except:
+                    descricao = np.nan
+
+                # Data completa de Extração
+                data = datetime.datetime.now(tz = pytz.timezone('America/Sao_Paulo')).strftime("%Y-%m-%d")
+
+                data_list.append({
+                    'pagina': pagina,
+                    'anuncio_pagina': anuncio_pagina,
+                    'id_imovel': id,
+                    'url_imovel': url_imo,
+                    'destaque': destaque,
+                    'bairro': bairro,
+                    'endereco': endereco,
+                    'descricao': descricao,
+                    'data_completa': data,
+                })
+
+        except Exception as e:
+            pass
+
+    dataframe_property_urls = pd.DataFrame(data_list)
+    return dataframe_property_urls
+
+def _get_html_especifc_for_wich_property(url_imo):
+
+    dicionario_informacoes = {}
+    browser = _get_driver_webscraping()
+    browser.get(url_imo)
+
+    try:
+        botao = WebDriverWait(browser, 3).until(
+            EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/div[1]/div[1]/div[1]/div[4]/div/a"))
+        ).click()
+    except:
+        pass
+    
+    resultado = browser.find_element(By.XPATH, '//*')
+    source_code = resultado.get_attribute("innerHTML")
+
+    browser.quit()
+
+    soup = BeautifulSoup(source_code, 'html.parser')
+
+    try:
+        preco = soup.find_all('p', class_='l-text l-u-color-neutral-28 l-text--variant-display-regular l-text--weight-bold price-info-value')[0].text
+        dicionario_informacoes['preco'] = preco
+    except:
+        preco = np.nan
+
+    try:
+        dicionario_de_itens = soup.find_all("div", "amenities-list")
+        todos_os_itens = dicionario_de_itens[0].find_all('p', class_="l-text l-u-color-neutral-28 l-text--variant-body-small l-text--weight-regular amenities-item")
+        dicionario_itens_final = dict(map(lambda item: (item.get("itemprop"), item.text), todos_os_itens))
+        dicionario_informacoes.update(dicionario_itens_final)
+    except:
+        pass
+
+    try:
+        condominio = soup.find_all('span', class_='l-text l-u-color-neutral-28 l-text--variant-body-regular l-text--weight-bold undefined')
+        condominio = condominio[0].text
+    except:
+        condominio = np.nan
+
+    try:
+        iptu = soup.find_all('span', class_='l-text l-u-color-neutral-28 l-text--variant-body-regular l-text--weight-bold undefined')
+        iptu = iptu[1].text
+    except: 
+        iptu = np.nan
+
+    try:
+        endereco = soup.find_all('p', class_='l-text l-u-color-neutral-28 l-text--variant-body-regular l-text--weight-bold address-info-value')
+        endereco = endereco[0].text
+    except:
+        endereco = np.nan   
+
+    dicionario_informacoes['condominio'] = condominio
+    dicionario_informacoes['iptu'] = iptu
+    dicionario_informacoes['endereco'] = endereco
+
+    return dicionario_informacoes
