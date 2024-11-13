@@ -11,7 +11,6 @@ from random_user_agent.user_agent import UserAgent
 import pandas as pd
 import datetime
 import pytz
-from sqlalchemy import create_engine
 from pandas import json_normalize
 import os
 from selenium.webdriver.chrome.service import Service

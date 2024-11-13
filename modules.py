@@ -20,13 +20,11 @@ import numpy as np
 import datetime
 import pytz
 
+# Função para retornar um driver do selenium configurado para webscraping.
 def _get_driver_webscraping():
-    '''
-        ### Objetivo
-        * Função para retornar um driver do selenium configurado para webscraping.
-    '''
+
     chrome_options = Options()
-    #chrome_options.add_argument('--headless')
+    # chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
     chrome_options.add_argument('--log-level=3')
@@ -39,6 +37,7 @@ def _get_driver_webscraping():
 
     return driver
 
+# Função para retornar um dicionário com os headers configurados para webscraping.
 def _get_headers_webscraping():
     
     ua = UserAgent()
@@ -60,6 +59,7 @@ def _get_headers_webscraping():
 
     return headers
 
+# Função para retornar o número de páginas disponíveis com base na localidade e no tipo e subtipo escolhidos.
 def _number_of_pages(base_url, transaction, type, local):
     '''
         ### Objetivo
@@ -67,30 +67,6 @@ def _number_of_pages(base_url, transaction, type, local):
         ### Parâmetros
         #### Transação: 
             * Possui as opções ['aluguel', 'venda'].
-        #### Tipo: 
-            * RESIDENCIAL
-                * apartamentos
-                * studio
-                * quitinetes
-                * casas
-                * sobrados
-                * casas-de-condominio
-                * casas-de-vila
-                * cobertura
-                * flat
-                * loft
-                * terrenos-lotes-condominios
-                * fazendas-sitios-chacaras
-            * COMERCIAL
-                * loja-salao
-                * conjunto-comercial-sala
-                * casa-comercial
-                * hoteis-moteis-pousadas
-                * andares-lajes-corporativas
-                * predio-inteiro
-                * terrenos-lotes-comerciais
-                * galpao-deposito-armazem
-                * box-garagem
         #### Local: 
             * {uf}+{cidade} -> o nome do estado é separado do nome da cidade pelo sinal de +. O nome da cidade, caso tenha espaços, deve ser separado com -
             * Ex: sp+sao-paulo
@@ -143,6 +119,7 @@ def _number_of_pages(base_url, transaction, type, local):
 
         return resultado
 
+# Função para retornar o HTML de uma página com vários cards.
 def _get_html_with_many_cards(base_url, transaction, type, local, paginas):
 
     # browser
@@ -172,6 +149,7 @@ def _get_html_with_many_cards(base_url, transaction, type, local, paginas):
 
     return source_code
 
+# Função para aplicar a função em paralelo para as funções de webscraping.
 def _apply_functions_in_parallel_to_webscraping(list_use_in_function, function_to_apply, name_file, key_name, workers=3, args=None):
 
     if args is None: args = []
@@ -211,7 +189,7 @@ def _apply_functions_in_parallel_to_webscraping(list_use_in_function, function_t
     return info_pages, erro_pages
 
 # Função para ler os arquivos Parquet
-def read_results(name_file: str, key_name: str = 'url_imovel'):
+def _read_results_parquet(name_file: str, key_name: str = 'url_imovel'):
     try:
         # Lendo os resultados de html_pagina e erro_pagina
         html_pages_df = pd.read_parquet(f"{name_file}.parquet")
@@ -219,7 +197,7 @@ def read_results(name_file: str, key_name: str = 'url_imovel'):
 
         # Convertendo os DataFrames de volta para listas/dicionários
         html_pages = html_pages_df.to_dict(orient="records")
-        erro_pages = dict(zip(erro_pages_df[key_name], erro_pages_df['erro']))
+        erro_pages = dict(zip(erro_pages_df[key_name], erro_pages_df[key_name]))
 
         return html_pages, erro_pages
 
@@ -227,6 +205,7 @@ def read_results(name_file: str, key_name: str = 'url_imovel'):
         print("Arquivo não encontrado.")
         return [], {}
 
+# Função para ler os arquivos JSON
 def _read_json_file(file_name):
     with open(file_name, "r") as f:
         try:
@@ -237,13 +216,14 @@ def _read_json_file(file_name):
     
     return data_list
 
+# Função para extrair os dados do HTML de uma página com vários cards.
 def _extract_data_in_html_for_page_with_many_cards(dados_lista):
 
     data_list = []
 
     for pagina, html in enumerate(dados_lista):
 
-        soup = BeautifulSoup(html['conteudo'], 'html.parser')
+        soup = BeautifulSoup(html['content'], 'html.parser')
         all_results = soup.find('div', {"class":"listing-wrapper__content"})
 
         try:
@@ -307,6 +287,7 @@ def _extract_data_in_html_for_page_with_many_cards(dados_lista):
     dataframe_property_urls = pd.DataFrame(data_list)
     return dataframe_property_urls
 
+# Função para retornar o HTML de uma página específica para um imóvel.
 def _get_html_especifc_for_wich_property(url_imo):
 
     dicionario_informacoes = {}
@@ -364,3 +345,65 @@ def _get_html_especifc_for_wich_property(url_imo):
     dicionario_informacoes['endereco'] = endereco
 
     return dicionario_informacoes
+
+# Função para transformar os dados em um DataFrame
+def _transform_data_to_dataframe(dados_lista):
+
+    def limpar_preco(valor):
+    
+        if isinstance(valor, str):
+            valor = valor.replace("R$", "").replace(".", "").replace(",", ".").strip()
+            try:
+                valor = float(valor)
+            except:
+                valor = None
+        
+        return valor
+
+    def limpar_m2(valor):
+        
+        if isinstance(valor, str):
+            valor = valor.replace("m²", "").replace(",", ".").strip()
+            try:
+                valor = float(valor)
+            except:
+                valor = None
+        
+        return valor
+
+    def limpar_numero(valor):
+        if isinstance(valor, str):
+            if "-" not in valor:
+                valor = re.sub(r"[^0-9]", "", valor)  # Remove qualquer coisa que não seja número
+                return int(valor) if valor else None
+            else:
+                valor = None
+        return valor
+
+    dados_imoveis = pd.json_normalize(dados_lista)
+
+    # Identificar colunas com mais de X% de dados não nulos
+    dados_resumidos = dados_imoveis.loc[:, dados_imoveis.notnull().mean() > 0.6].copy()
+    dados_resumidos = dados_resumidos.rename(columns={
+        "content.condominio": "condominio",
+        "content.endereco": "endereco",
+        "content.floorSize": "area",
+        "content.iptu": "iptu",
+        "content.numberOfBathroomsTotal": "banheiros",
+        "content.numberOfParkingSpaces": "vagas_de_carro",
+        "content.numberOfRooms": "quartos",
+        "content.numberOfSuites": "suites",
+        "content.preco": "preco"
+    })
+
+    # Aplica as funções de limpeza nas colunas
+    dados_resumidos['preco'] = dados_resumidos['preco'].apply(limpar_preco)
+    dados_resumidos['area'] = dados_resumidos['area'].apply(limpar_m2)
+    dados_resumidos['condominio'] = dados_resumidos['condominio'].apply(limpar_preco)
+    dados_resumidos['iptu'] = dados_resumidos['iptu'].apply(limpar_preco)
+    dados_resumidos['banheiros'] = dados_resumidos['banheiros'].apply(limpar_numero)
+    dados_resumidos['vagas_de_carro'] = dados_resumidos['vagas_de_carro'].apply(limpar_numero)
+    dados_resumidos['quartos'] = dados_resumidos['quartos'].apply(limpar_numero)
+    dados_resumidos['suites'] = dados_resumidos['suites'].apply(limpar_numero)
+
+    return dados_resumidos
