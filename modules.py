@@ -347,12 +347,12 @@ def _get_html_especifc_for_wich_property(url_imo):
     return dicionario_informacoes
 
 # Função para transformar os dados em um DataFrame
-def _transform_data_to_dataframe(dados_lista):
+def _transform_data_to_dataframe(dados_lista, aluguel=False):
 
     def limpar_preco(valor):
     
         if isinstance(valor, str):
-            valor = valor.replace("R$", "").replace(".", "").replace(",", ".").strip()
+            valor = valor.replace("/mês", "").replace("R$", "").replace(".", "").replace(",", ".").strip()
             try:
                 valor = float(valor)
             except:
@@ -380,7 +380,25 @@ def _transform_data_to_dataframe(dados_lista):
                 valor = None
         return valor
 
+
+    colunas_funcoes = {
+        'preco': limpar_preco,
+        'area': limpar_m2,
+        'condominio': limpar_preco,
+        'iptu': limpar_preco,
+        'banheiros': limpar_numero,
+        'vagas_de_carro': limpar_numero,
+        'quartos': limpar_numero,
+        'suites': limpar_numero
+    }
+
     dados_imoveis = pd.json_normalize(dados_lista)
+
+    if aluguel:
+
+        dados_imoveis["property_type"] = dados_imoveis["url"].apply(_apply_identify_property_type)
+        dados_imoveis = dados_imoveis[dados_imoveis["property_type"] == "Residential"].drop(columns=["property_type"])
+        dados_imoveis = dados_imoveis.loc[:, dados_imoveis.notnull().mean() > 0.5].copy()
 
     # Identificar colunas com mais de X% de dados não nulos
     dados_resumidos = dados_imoveis.loc[:, dados_imoveis.notnull().mean() > 0.6].copy()
@@ -396,14 +414,21 @@ def _transform_data_to_dataframe(dados_lista):
         "content.preco": "preco"
     })
 
-    # Aplica as funções de limpeza nas colunas
-    dados_resumidos['preco'] = dados_resumidos['preco'].apply(limpar_preco)
-    dados_resumidos['area'] = dados_resumidos['area'].apply(limpar_m2)
-    dados_resumidos['condominio'] = dados_resumidos['condominio'].apply(limpar_preco)
-    dados_resumidos['iptu'] = dados_resumidos['iptu'].apply(limpar_preco)
-    dados_resumidos['banheiros'] = dados_resumidos['banheiros'].apply(limpar_numero)
-    dados_resumidos['vagas_de_carro'] = dados_resumidos['vagas_de_carro'].apply(limpar_numero)
-    dados_resumidos['quartos'] = dados_resumidos['quartos'].apply(limpar_numero)
-    dados_resumidos['suites'] = dados_resumidos['suites'].apply(limpar_numero)
+    for coluna, funcao in colunas_funcoes.items():
+        if coluna in dados_resumidos.columns:
+            dados_resumidos[coluna] = dados_resumidos[coluna].apply(funcao)
 
     return dados_resumidos
+
+def _apply_identify_property_type(url):
+    # Keywords to identify property types
+    residential_keywords = ["apartamento", "casa", "condominio"]
+    commercial_keywords = ["loja", "conjunto", "sala", "galpao", "laje", "terreno"]
+    
+    # Check if the URL contains any keywords for each property type
+    if any(keyword in url for keyword in residential_keywords):
+        return "Residential"
+    elif any(keyword in url for keyword in commercial_keywords):
+        return "Commercial"
+    else:
+        return "Not identified"
