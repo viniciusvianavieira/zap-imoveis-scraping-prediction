@@ -7,6 +7,7 @@ from random_user_agent.user_agent import UserAgent
 from tqdm import tqdm 
 from bs4 import BeautifulSoup
 import requests
+import warnings
 import re
 import time
 from selenium.webdriver.support.ui import WebDriverWait
@@ -19,6 +20,8 @@ import json
 import numpy as np
 import datetime
 import pytz
+
+warnings.filterwarnings("ignore")
 
 # Função para retornar um driver do selenium configurado para webscraping.
 def _get_driver_webscraping():
@@ -349,8 +352,21 @@ def _get_html_especifc_for_wich_property(url_imo):
 # Função para transformar os dados em um DataFrame
 def _transform_data_to_dataframe(dados_lista, aluguel=False):
 
+    def _apply_identify_property_type(url):
+        # Keywords to identify property types
+        residential_keywords = ["apartamento", "casa", "condominio"]
+        commercial_keywords = ["loja", "conjunto", "sala", "galpao", "laje", "terreno"]
+        
+        # Check if the URL contains any keywords for each property type
+        if any(keyword in url for keyword in residential_keywords):
+            return "Residential"
+        elif any(keyword in url for keyword in commercial_keywords):
+            return "Commercial"
+        else:
+            return "Not identified"
+
     def limpar_preco(valor):
-    
+
         if isinstance(valor, str):
             valor = valor.replace("/mês", "").replace("R$", "").replace(".", "").replace(",", ".").strip()
             try:
@@ -380,55 +396,102 @@ def _transform_data_to_dataframe(dados_lista, aluguel=False):
                 valor = None
         return valor
 
+    def limpar_booleano(valor):
+        if isinstance(valor, str):
+            if valor:
+                return True
+            else:
+                return False
+        else:
+            return False
+
+    value_coluns = "conteudo" if not aluguel else "content"
+    colunas_relevantes = [
+        f'{value_coluns}.floorsize', f'{value_coluns}.numberofrooms', f'{value_coluns}.numberofbathroomsTotal',
+        f'{value_coluns}.numberofsuites', f'{value_coluns}.numberofparkingspaces', f'{value_coluns}.preco',
+        f'{value_coluns}.endereco', f'{value_coluns}.floorlevel', f'{value_coluns}.condominio', f'{value_coluns}.iptu',
+        f'{value_coluns}.pool', f'{value_coluns}.garden', f'{value_coluns}.sports_court', f'{value_coluns}.gym',
+        f'{value_coluns}.elevator', f'{value_coluns}.gated_community',
+        f'{value_coluns}.furnished', "url_imovel", "url"
+    ]
 
     colunas_funcoes = {
         'preco': limpar_preco,
         'area': limpar_m2,
-        'condominio': limpar_preco,
+        'valor_condominio': limpar_preco,
         'iptu': limpar_preco,
         'banheiros': limpar_numero,
         'vagas_de_carro': limpar_numero,
         'quartos': limpar_numero,
-        'suites': limpar_numero
+        'suites': limpar_numero,
+        'mobiliado': limpar_booleano,
+        'andar': limpar_numero,
+        'piscina': limpar_booleano,
+        'condominio': limpar_booleano,
+        'elevador': limpar_booleano,
+        'jardim': limpar_booleano,
+        'quadra_esportiva': limpar_booleano,
+        'academia': limpar_booleano,
+        
+    }
+
+    colunas_organizadas = [
+        "url",           # URL do imóvel, para referência
+        "endereco",      # Endereço do imóvel
+        "preco",         # Preço do imóvel
+        "area",          # Área total do imóvel
+        "andar",         # Andar em que o imóvel está (se aplicável)
+        "quartos",       # Número de quartos
+        "suites",        # Número de suítes
+        "banheiros",     # Número de banheiros
+        "vagas_de_carro",# Número de vagas de estacionamento
+        "valor_condominio",    # Valor do condomínio
+        "iptu",          # Valor do IPTU
+        "mobiliado",     # Indicação se o imóvel é mobiliado
+        "piscina",       # Presença de piscina
+        "condominio",    # Indicação se o imóvel está em condomínio fechado
+        "elevador",      # Indicação se o imóvel tem elevador
+        "jardim",        # Indicação se o imóvel tem jardim
+        "quadra_esportiva",# Indicação se o imóvel tem quadra esportiva
+        "academia",      # Indicação se o imóvel tem academia
+    ]
+
+    colunas_renomeadas = {
+        f"{value_coluns}.condominio": "valor_condominio",
+        f"{value_coluns}.endereco": "endereco",
+        f"{value_coluns}.floorsize": "area",
+        f"{value_coluns}.iptu": "iptu",
+        f"{value_coluns}.numberofbathroomsTotal": "banheiros",
+        f"{value_coluns}.numberofparkingspaces": "vagas_de_carro",
+        f"{value_coluns}.numberofrooms": "quartos",
+        f"{value_coluns}.numberofsuites": "suites",
+        f"{value_coluns}.preco": "preco",
+        f'{value_coluns}.floorlevel': 'andar',
+        f'{value_coluns}.pool': 'piscina',
+        f'{value_coluns}.gated_community': 'condominio',
+        f"{value_coluns}.furnished": "mobiliado",
+        f"{value_coluns}.elevator": "elevador",
+        f"{value_coluns}.garden": "jardim",
+        f"{value_coluns}.sports_court": "quadra_esportiva",
+        f"{value_coluns}.gym": "academia",
+        "url_imovel": "url"
     }
 
     dados_imoveis = pd.json_normalize(dados_lista)
+    dados_imoveis.columns = dados_imoveis.columns.str.lower()
 
-    if aluguel:
+    colunas_existentes = [coluna for coluna in colunas_relevantes if coluna in dados_imoveis.columns]
+    dados_imoveis = dados_imoveis[colunas_existentes].copy()
 
-        dados_imoveis["property_type"] = dados_imoveis["url"].apply(_apply_identify_property_type)
-        dados_imoveis = dados_imoveis[dados_imoveis["property_type"] == "Residential"].drop(columns=["property_type"])
-        dados_imoveis = dados_imoveis.loc[:, dados_imoveis.notnull().mean() > 0.5].copy()
-
-    # Identificar colunas com mais de X% de dados não nulos
-    dados_resumidos = dados_imoveis.loc[:, dados_imoveis.notnull().mean() > 0.6].copy()
-    dados_resumidos = dados_resumidos.rename(columns={
-        "content.condominio": "condominio",
-        "content.endereco": "endereco",
-        "content.floorSize": "area",
-        "content.iptu": "iptu",
-        "content.numberOfBathroomsTotal": "banheiros",
-        "content.numberOfParkingSpaces": "vagas_de_carro",
-        "content.numberOfRooms": "quartos",
-        "content.numberOfSuites": "suites",
-        "content.preco": "preco"
-    })
+    dados_resumidos = dados_imoveis.rename(columns=colunas_renomeadas).copy()
 
     for coluna, funcao in colunas_funcoes.items():
         if coluna in dados_resumidos.columns:
             dados_resumidos[coluna] = dados_resumidos[coluna].apply(funcao)
 
-    return dados_resumidos
+    dados_resumidos["tipo"] = dados_resumidos["url"].apply(_apply_identify_property_type)
 
-def _apply_identify_property_type(url):
-    # Keywords to identify property types
-    residential_keywords = ["apartamento", "casa", "condominio"]
-    commercial_keywords = ["loja", "conjunto", "sala", "galpao", "laje", "terreno"]
-    
-    # Check if the URL contains any keywords for each property type
-    if any(keyword in url for keyword in residential_keywords):
-        return "Residential"
-    elif any(keyword in url for keyword in commercial_keywords):
-        return "Commercial"
-    else:
-        return "Not identified"
+    colunas_existentes = [coluna for coluna in colunas_organizadas if coluna in dados_resumidos.columns]
+    dados_resumidos_organizado = dados_resumidos[colunas_existentes]
+
+    return dados_resumidos_organizado
