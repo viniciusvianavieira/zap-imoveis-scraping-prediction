@@ -1,0 +1,2003 @@
+body, html {
+    background-color: #FAFAFA;
+}
+
+/* .Hover-Link:hover {
+    background-color: red
+} */
+
+.hover-cell:hover {
+    overflow: visible !important;
+    white-space: normal !important;
+    z-index: 2 !important;
+}
+
+li{
+    list-style-type: none;
+    width: 100%;
+}
+
+
+Ul{
+    padding: 0;
+    margin: 0;
+}
+
+.Logout-in-Card{
+    height: 25px;
+    width: 65px;
+    margin: 28px 16px 28px 16px;
+}
+
+.nav-bar{
+    background-color: #F2F4F8;
+    box-shadow: 0px 2px 7px 0px #0000001A;
+    padding: 37px 49px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 72px;
+}
+
+.Menu-in-Nav-Bar{
+    height: 22px;
+    width: 32px;
+
+}
+
+.Logo-in-Nav-Bar{
+    width: 101px;
+    height: 18px;
+}
+    
+.Div-Inside-List{
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.input-in-dash{
+    width: 180px;
+    border-radius: 8px;
+}
+
+.Item-List-in-Card{
+
+font-family: Red Hat Display;
+font-size: 14px;
+font-weight: 600;
+color: #4D5358;
+display: flex;
+justify-content: space-between;
+align-items: center;
+
+}
+
+.List-in-Card{
+
+margin-top: 52px; 
+padding: 0px 16px;
+display: flex;
+flex-direction: column;
+gap: 12px;
+
+width: 100%;
+
+}
+
+.Link-in-List-Item{
+font-family: "Red Hat Display";
+color: #4D5358;
+text-Decoration: none;
+}
+
+
+/* Barra de rolagem VVVVV */
+
+::-webkit-scrollbar {
+width: 8px; 
+border-radius: 10px; 
+}
+
+::-webkit-scrollbar-thumb {
+background: #888; 
+border-radius: 20px; 
+}
+
+::-webkit-scrollbar-track {
+background: #f1f1f1;
+border-radius: 20px;
+}
+
+    
+/* Barra de rolagem ^^ */
+
+/* Componente Card vvvvvvvv*/
+
+.custom-card {
+
+border: #FAFAFA;
+background-color: #FAFAFA;
+border: none;
+padding: 16px 16px;
+border-radius: 16px;
+width: 100%;
+border: none;
+}
+
+.custom-card-header {
+background-color: #FAFAFA;
+
+}
+
+
+.Div-Information{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.info-card-image{
+    height: 14px;
+    width: 14px;
+
+}
+
+
+.Tooltip{
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5px;
+}
+
+.custom-card-body {
+padding: 0;
+}
+
+.custom-card-title {
+
+font-family: "Red Hat Display";
+font-weight: 600;
+font-size: 12px;
+
+text-align: center;
+white-space: nowrap;
+
+background-color: #FAFAFA;
+border: #FAFAFA;
+
+
+color: var(--Grey-Palette-C7, #4D5358);
+
+}
+
+.custom-card-text {
+
+margin-top: 10px;
+font-size: 14px;
+font-weight: 700;
+
+text-align: center;
+white-space: nowrap;
+
+background-color: #FAFAFA;
+
+font-family: "Red Hat Display";
+
+color: var(--Varos-Principal-FL-Green, #19C819);
+
+}
+
+
+.Information-Card{
+    background-color: #F2F4F8;
+    min-width: 260px;
+    width: 100%;
+    max-width: 358px;
+    height: 151px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    border-radius: 16px;
+}
+
+.Information-Card-Header{
+
+    color:  #878D96;
+    font-weight: 500;
+    font-size: 16px;
+    font-family: Red Hat Display;
+
+}
+
+.Information-Card-Body{
+
+    color: #1C2434;
+    font-weight: 700;
+    font-size: 24px;
+    font-family: Red Hat Display;
+
+}
+
+/* Componente Card ^^^^^*/
+
+/* Componente Dropdown vvvv */
+
+
+.mantine-Select-input:hover{
+    background-color: #E2E5EB;
+    border: 1px solid #E2E5EB;
+    color: black;
+}
+
+.mantine-Select-input:active{
+    background-color: #D2D5DB !important;
+    border: 1px solid #D2D5DB !important;
+    color: black;
+}
+
+.mantine-DateRangePicker-input{
+height: 40px !important;
+font-size: 12px !important;
+width: 170px;
+color: black;
+}
+
+.mantine-Select-input{
+height: 40px !important;
+font-size: 12px !important;
+width: 170px;
+background-color: #F2F4F8;
+border-radius: 8px;
+box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+color: black;
+} 
+
+.Arrow-Down{
+width: 11px;
+height: 11px;
+color: #4D5358;
+}
+
+.Arrow-Right{
+width: 28px;
+height: 28px;
+color: #4D5358;
+}
+
+.main-menu-icon{
+width: 25px;
+height: 25px;
+color: #4D5358;
+}
+
+.checklist-dropdown{
+    width: auto !important;
+    font-size: 12px !important;
+    color: black;
+}
+
+.btn{
+    background-color: #F2F4F8;
+    color: black;
+    width: 170px;
+    height: 40px;
+    font-size: 12px !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    border: 1px solid rgb(206, 212, 218);
+    font-weight: 500;
+    text-align: left !important;
+    content: none !important;
+}
+
+.btn:hover{
+    background-color: #E2E5EB;
+    border: 1px solid #E2E5EB;
+    color: black;
+}
+
+.btn:active{
+    background-color: #D2D5DB !important;
+    border: 1px solid #D2D5DB !important;
+    color: black;
+}
+
+.dropdown-menu{
+    width: calc(100% + 70px);
+    overflow-y: scroll;
+    max-height: 400px;
+    font-size: 14px !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    color: black;
+    gap: 5px;
+}
+
+.checklist-dropdown{
+    font-size: 14px !important;
+    color: black;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: center;
+}
+
+.checklist-dropdown label {
+
+    display: flex !important;
+    flex-direction: row !important;
+    column-gap: 3px !important;
+}
+
+.checklist-dropdown input {
+
+    width: 13px;
+}
+
+/* Componente Dropdown ^^^^^ */
+
+/* Componente Multi Select vvvv */
+
+.mantine-MultiSelect-input{
+    height: 40px !important;
+    font-size: 12px !important;
+    width: 170px;
+    background-color: #F2F4F8;
+    border-radius: 8px;
+    box-shadow: 8px 8px rgba(0,0,0,0.1);
+    color: black;
+    overflow-y: scroll;
+    font-family: "Red Hat Display";
+    border: none;
+} 
+
+/* Componente Multi Select ^^^^^ */
+
+/* Componente botao */
+.botoes-csv{
+    background-color: #F2F4F8;
+    color: black;
+    width: 100px;
+    height: 40px;
+    font-size: 12px !important;
+    font-family: "Red Hat Display";
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    border: 1px solid rgb(206, 212, 218);
+    font-weight: 500;
+    text-align: left !important;
+    content: none !important; 
+}
+
+/* Componente botao */
+
+
+/* Componente Imput vvvvvvvv */
+.mantine-TextInput-input{
+    font-family: Red Hat Display;
+    font-size: 12px !important;
+    font-family: "Red Hat Display";
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    border: 1px solid rgb(206, 212, 218);
+    font-weight: 500;
+    text-align: left !important;
+    content: none !important;
+    background-color: #E2E5EB;
+}
+
+
+/* CARD IMPUT VVVV */
+
+.card-external-with-imput{
+    
+    margin: 0px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+    border-bottom: 1px solid var(--Neutral-Stroke-Default-Rest, #C6CAD2);
+    border-left: 1px solid var(--Neutral-Stroke-Default-Rest, #C6CAD2);
+    border-right: 1px solid var(--Neutral-Stroke-Default-Rest, #C6CAD2);
+
+}
+
+.card-external-header-title{
+
+    padding: 16px;
+    margin: 0px;
+    color: var(--Neutral-Foreground-Rest, #878D96);
+    font-family: "Red Hat Display";
+    font-size: 16px;
+    font-style: normal;
+    line-height: normal;
+    font-weight: 700;
+
+    
+}
+
+.card-external-header-component{
+    display: flex;
+    border-bottom: 1px solid var(--Neutral-Stroke-Default-Rest, #C6CAD2);
+    border-top: 1px solid var(--Neutral-Stroke-Default-Rest, #C6CAD2);
+    justify-content: center;
+}
+
+.card-body-component{
+    display: flex;
+    padding: 16px;
+    /* border-bottom: 1px solid var(--Neutral-Stroke-Default-Rest, #C6CAD2); */
+    /* border-left: 1px solid var(--Neutral-Stroke-Default-Rest, #C6CAD2); */
+    background: var(--Neutral-Background-Button-Rest, #E2E5EB);
+    align-items: center;
+    justify-content: center;
+}
+
+.input-in-card{
+    color: var(--Neutral-Foreground-Rest, #878D96);
+    font-family: "Red Hat Display";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.Image-in-card{
+    width: 20px;
+    height: 20px;
+}
+
+.Text-in-Card-Without-Imput{
+    color: var(--Neutral-Foreground-Rest, #878D96);
+    font-family: "Red Hat Display";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin: 0;
+    padding: 7.5px 0px 7.5px 0px; 
+}
+
+/* CARD IMPUT ^^^ */
+
+
+/* CARDS LANÇAMENTOS vvvv */
+
+.Information-Card-Header-Lancamento{
+    
+    color: #7C838C;
+    font-family: "Red Hat Display";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 135%;
+    letter-spacing: 0.28px;
+
+}
+
+.Information-Card-Body-Lancamento{
+
+    color: var(--Neutral-Foreground-Rest, #878D96);
+    font-family: "Red Hat Display";
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 135%;
+    letter-spacing: 0.76px;
+
+}
+
+.Information-Card-Header-Below-Lancamento{
+
+    color: var(--Neutral-Foreground-Rest, #878D96);
+    font-family: "Red Hat Display";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 135%; 
+    letter-spacing: 0.28px;
+}
+
+.Information-Card-Lancamento{
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    border: 1px solid var(--Neutral-Stroke-Default-Rest, #C6CAD2);
+    background: var(--Neutral-Background-Default-Rest, #F2F4F8);
+    height: 137px;
+}
+
+.First-Line-List-of-Cards-Lancamento{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 16px;
+    row-gap: 16px;
+    max-width: 1080px;
+    /* justify-content: center; */
+}
+
+
+.Div-Around-Texts-in-Header-Card{
+    display: flex;
+    justify-content: space-between;
+    width: 137.5px;
+
+}
+
+.Information-Obs-in-Header{
+    color: #7C838C;
+    font-family: "Red Hat Display";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 135%;
+    letter-spacing: 0.28px;    
+}
+
+/* CARDS LANÇAMENTOS ^^^ */
+
+/* CARDS LANÇAMENTO VERTICAL vvvv */
+
+
+.custom-card-vertical{
+    border: #F2F4F8;
+    background-color: #F2F4F8;
+    border: none;
+    width: 100%;
+    border: none;
+}
+
+.custom-card-header-vertical{
+    background-color: #F2F4F8;
+    margin-bottom: 10px;
+}
+
+.custom-card-body-vertical{
+    padding: 0;
+}
+
+.custom-card-title-vertical{
+    color: #7C838C;
+    font-family: "Red Hat Display";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 135%; /* 18.9px */
+    letter-spacing: 0.28px;
+}
+
+.custom-card-text-vertical{
+    color: var(--Neutral-Foreground-Text-Sub, #4D5358);
+
+    /* text-2xl */
+    font-family: "Red Hat Display";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 135%; /* 32.4px */
+    letter-spacing: 0.48px;
+}
+
+/* CARDS LANÇAMENTO VERTICAL ^^^^ */
+
+.First-Big-Card{
+    display: none;
+}
+
+.First-Big-Container{
+padding: 0;
+margin: 0;
+}
+
+
+.Main-Menu-Div-in-First-Container{
+
+display: flex;
+justify-content: flex-end;
+padding: 16px;
+}
+
+.Logo-in-Card{
+width: 238px;
+height: 71px;
+margin: 32px 38px 0px 28px;
+}
+
+.LI-Cards{
+    max-width: 172px;
+}
+
+.LI-Cards-Vertical{
+    max-width: 113px;
+}
+
+.LI-Cards-Lançamento{
+    max-width: 270px;
+}
+
+.LI-Cards-With-Imput{
+    width: 178px;
+}
+
+.LI-Cards-TD{
+    max-width: 160px;
+}
+
+.LI-Cards-OG{
+    max-width: 160px;
+}
+
+.Title-of-Page{
+font-family: Red Hat Display;
+font-size: 24px;
+font-weight: 700;
+line-height: 24px;
+letter-spacing: 0em;
+text-align: left;
+color: #4D5358;
+margin-bottom: 16px;
+
+}
+
+.Loading-Refresh-Pages{
+padding: 0;
+margin: 0;
+
+}
+
+.Container-Pages{
+padding: 16px ;
+
+}
+
+.First-Cards-Line{
+
+padding: 0 ;
+margin: 0;
+
+}
+
+.First-Main-Div-Home{
+margin: 0;
+padding: 0;
+
+}
+
+.Layout-Main-Dropdown{
+margin: 0;
+padding: 0;
+display: flex;
+margin-bottom: 24px;
+gap: 16px;
+flex-wrap: wrap;
+
+}
+
+.Layout-Cards-Geral-Line{
+margin: 0;
+padding: 0;
+margin-bottom: 56px;
+}
+
+.First-Title-About-List-of-Cards{
+
+text-align: center;
+border-radius: 16px;
+font-size: 14px;
+padding: 8px;
+color: #F2F4F8;
+background-color: #4D5358;
+width: 100%;
+max-width: 1152px;
+
+}
+
+.First-Line-List-of-Cards-Home{
+
+margin: 0;
+padding: 0;
+display: flex;
+flex-wrap: wrap;
+column-gap: 8px;
+row-gap: 16px;
+justify-content: center;
+max-width: 1152px;
+
+}
+
+.Div-With-Map{
+    margin-top: 24px;
+    max-width: 1152px;
+    height: 500px;
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+}
+
+.Div-With-Map-Left-Side{
+    width: 80%;
+}
+
+.Div-With-Map-Right-Side{
+    width: 20%;
+    background-color: #F2F4F8;
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.Layout-Cards-Trafego-E-Organico{
+
+/* gap: 32px;
+display: flex;
+flex-direction: column;*/
+
+margin-bottom: 56px; 
+width: 1152px;
+}
+
+.Layout-Cards-Trafego-Direto{
+background-color: #F2F4F8;
+border-radius: 32px;
+justify-content: center;
+padding: 16px; 
+
+}
+.Second-Line-List-of-Cards-Home{
+
+display: flex;
+flex-wrap: wrap;
+column-gap: 24px;
+row-gap: 16px; 
+justify-content: center; 
+margin-top: 16px;
+
+}
+
+.Third-Line-List-of-Cards-Home{
+
+display: flex;
+flex-wrap: wrap;
+column-gap: 24px;
+row-gap: 16px;
+justify-content: center;
+margin-top: 16px;
+}
+
+.Layout-Cards-Organico{
+background-color: #F2F4F8;
+border-radius: 32px;
+justify-content: center;
+padding: 16px; 
+}
+
+.Layout-Graficos-Home{
+background-color: #F2F4F8;
+border-radius: 32px;
+padding: 16px;
+display: flex;
+flex-direction: column;
+gap: 32px;
+margin-bottom: 56px;
+}
+
+.First-Graph-in-Home{
+    border-radius: 16px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    background-color: #FAFAFA;
+    position: relative;
+    width: 100%;
+    height: 245px;
+}
+
+.First-Graph-in-So-Much-Diferent{
+    border-radius: 16px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    background-color: #FAFAFA;
+    position: relative;
+    width: 100%;
+    height: 350px;
+}
+
+
+.Second-Graph-in-Home{
+border-radius: 16px;
+box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+background-color: #FAFAFA;
+}
+
+.grafico-vendas-por-dia{
+width: 100%;
+position: absolute;
+top: 0;
+left: 0;
+height: 100%;
+}
+
+.grafico-treemap-trafego-home-perpetuo{
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.Layout-Tables-Home{
+padding: 0;
+margin: 0;
+display: flex;
+flex-direction: column;
+gap: 51px;
+
+}
+
+.Layout-Plataforma-de-Vendas-Table{
+padding: 0;
+margin: 0;
+}
+
+.Layout-Descricao-Contato-Home{
+padding: 0;
+margin: 0;
+}
+
+.Layout-Descricao-Contato-Only-Tables{
+padding: 0;
+margin: 0;
+display: flex;
+flex-direction: column;
+gap: 24px;
+
+}
+
+.Tables-Descricao-Contato{
+padding: 0;
+width: 100%;
+}
+
+.Title-Tables-Standart{
+color: var(--Grey-Palette-C7, #4D5358);
+font-family: "Red Hat Display";
+font-size: 18px;
+font-style: bold;
+line-height: normal;
+margin-bottom: 24px;
+font-weight: 700px; 
+}
+
+.Page-Refresh-Title {
+text-align: right;
+font-size: 12px;
+margin-top: 12px;
+margin-right: 16px;
+}
+
+.Layout-Tabelas-Organico{
+    display: flex;
+    flex-direction: column;
+    row-gap: 52px;
+}
+
+.First-Graph-in-Detalhamento-Vendas{
+    margin-top: 40px;
+}
+
+.Div-Vendas-Only-Components{
+    display: flex;
+    flex-direction: column;
+    row-gap: 32px;
+}
+
+
+.First-List-Tables-Trafego{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    row-gap: 42px;
+    margin-bottom: 52px;        
+}
+
+.Layout-Tabela-Detalhamento{
+    margin-bottom: 52px; 
+}
+
+.List-of-Dropdowns-in-Trafego{
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 8px;
+    row-gap: 16px;
+    justify-content: left;
+}
+
+.List-of-Dropdowns-in-Leads{
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 8px;
+    row-gap: 16px;
+    justify-content: left;
+    margin-bottom: 56px;
+
+}
+.Dropdowns-Inside-List{
+    max-width: 170px;
+}
+
+.Layout-Detalhamento-UTM{
+    margin: 24px 0px;
+    gap: 16px;
+    
+}
+
+.Div-Dropdown-Campaign{
+    max-width: 170px;
+}
+
+.Layout-Funil-Ads-Trafego{
+    margin-top: 56px;
+}
+
+.Leads-Per-Day{
+    margin-top: 20px;
+}
+
+.Layout-Graficos-Leads{
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 26px;
+}
+
+.Layout-With-Only-Single-Table-Trafego{
+    width: 100%;
+    max-width: 1152px;
+    margin-top: 24px;
+}
+
+.Div-Dropdown-Cadastro-Ofertas{
+    margin-top: 20px;
+}
+
+.Div-With-Two-Tables-in-Perpetuo-Home-Detalhamento-Compradores{
+    display: flex;
+    flex-direction: row;
+    column-gap: 24px;
+    width: 100%;
+    max-width: 1152px;
+}
+
+.Layout-Graficos-Plus-Table-Trafego{
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    width: 100%;
+    max-width: 1152px;
+    background-color: #F2F4F8;
+    border-radius: 32px;
+    padding: 16px;
+}
+
+.Two-Graphs-In-Same-Div-Home-Perpetuo-Trafego{
+    width: 50%;
+}
+
+.Div-With-Detalhamento-Trafego-Home-Perpetuo{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.Layout-With-Only-Single-Table{
+    width: 100%;
+    max-width: 1152px;
+}
+
+/* ################## vvv DASHBOARD PRODUTOS vvv ########################## */
+
+.Layout-Main-Dropdown-Produto{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+
+.Layout-Cards-Geral-Line-Produto{
+    max-width: 564px;
+    margin-bottom: 72px;
+}
+
+.Table-Resumo-Produtos-Home-Produt{
+    max-width: 1152px;   
+}
+
+.Table-Vendas-Totais-Home-Produto{
+    max-width: 1152px;
+    border-radius: 12px;
+    background-color: #F2F4F8;
+    padding: 32px;
+}
+
+.Second-Title-of-Page{
+    font-family: Red Hat Display;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #4D5358;
+    margin-bottom: 16px;
+}
+
+/* .First-Div-Home-Produto{
+    margin-bottom: 64px;
+} */
+
+.First-Main-Div-Home-Produto{
+    display: flex;
+    flex-direction: column;
+    row-gap: 72px;
+}
+
+.grafico-numeros-assinantes-produto{
+    width: 1152px;
+    height: 418px;
+}
+.grafico-vencimentos-assinaturas-produto{
+    width: 358px;
+    height: 418px;
+}
+
+.Two-Tables-Research-Home-Produto{
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+
+}
+
+.Div-Layout-Research-Home-Produto{
+    max-width: 1152px;
+}
+
+
+.graficos-socios-economicos{
+    width: 358px;
+    height: 392px;
+}
+
+.LI-Cards-Graphs{
+    width: 358px;
+    height: 392px;
+}
+
+.First-Line-List-of-Graphs-Home-Produto{
+
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    justify-content: left;
+    max-width: 1152px;
+
+}
+
+
+.First-Div-Cursos-Produto{
+
+    display: flex;
+    flex-direction: column;
+    row-gap: 41px;
+}
+
+
+
+.Div-Graph-Cursos-Vendas{
+    width: 100%;
+    border-radius: 12px;
+    background-color: #F2F4F8;
+    margin-bottom: 24px;
+    padding: 32px;
+    max-width: 1152px;
+}
+
+#numero-assinantes-assinantes-produto{
+    margin-bottom: 24px;
+}
+
+.Div-Graphs-Assinaturas{
+    border-radius: 12px;
+    background-color: #F2F4F8;
+    padding: 32px;
+}
+
+.First-Div-Assinantes-Produto{
+    display: flex;
+    flex-direction: column;
+    gap: 63px;
+    max-width: 1152px;
+}
+
+
+
+.proximos-vencimentos-assinantes-produto{
+    border-radius: 12px;
+    background-color: #F2F4F8;
+}
+
+
+.Second-Div-Vencimentos-Assinaturas{
+    border-radius: 12px;
+    background-color: #F2F4F8;
+    width: 100%;
+    max-width: 1152px;
+    margin-bottom: 24px;
+    padding: 32px;
+}
+
+
+.Second-Div-Graph-Aquisicoes{
+    margin: 0;
+    padding: 32px;
+}
+
+.grafico-primeiro-contato-assinaturas{
+    max-width: 560px;
+}
+
+.grafico-contato-compra-assinaturas{
+    max-width: 560px;
+}
+
+.Main-Div-Graph-Aquisicoes{
+    display: flex;
+    flex-direction: column;
+    row-gap: 32px;
+    max-width: 1152px;
+}
+
+
+.BTN-And-Table{
+    display: flex;
+    gap: 24px;
+}
+
+
+.Information-Card{
+    margin-bottom: 24px;
+}
+
+#grafico-primeiro-contato-assinaturas{
+    margin-bottom: 24px;
+}
+
+.Second-Div-Graph-Aquisicoes{
+    border-radius: 12px;
+    background-color: #F2F4F8; 
+}
+
+
+.dropdown-canais{
+    width: 100%;
+    max-width: 170px;
+    margin-bottom: 32px;
+}
+
+.First-Div-Graphs-Curso-Produto{
+    border-radius: 12px;
+    background-color: #F2F4F8; 
+    max-width: 1152px;
+    padding: 32px;
+}
+
+.Second-Div-Graphs-Curso-Produto{
+    border-radius: 12px;
+    background-color: #F2F4F8;
+    max-width: 664px;     
+    padding: 32px;
+}
+
+
+.Title-Inside-Div{
+    font-family: Red Hat Display;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0em;
+    color: #4D5358;
+}
+
+.Sub-Title-Inside-Div{
+    font-family: Red Hat Display;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0em;
+    color: #4D5358;
+}
+
+.Assinantes-Graphs-Home-Produtos{
+    border-radius: 12px;
+    background-color: #F2F4F8; 
+    max-width: 1152px;
+    padding: 32px;
+    margin-bottom: 20px;
+}
+
+#Tabela-Detalhamento-Vendas-Totais-Produto-Home{
+    max-width: 1152px;
+}
+
+.Div-Progresso-Cursos-Produtos{
+    border-radius: 12px;
+    background-color: #F2F4F8; 
+    padding: 32px;
+    margin-bottom: 20px;    
+}
+
+.Div-Modulos-Cursos-Produtos{
+    border-radius: 12px;
+    background-color: #F2F4F8; 
+    padding: 32px;
+    margin-bottom: 20px;        
+}
+
+
+.Div-Card-Information-Cursos-Vendas{
+    flex-wrap: wrap;
+}
+
+.Div-Graphs-Assinaturas{
+    margin-bottom: 24px;
+}
+
+#Tabela-Detalhamento-Vendas-Produto-Assinatura{
+    width: 100%;
+}
+
+#Tabela-Detalhamento-Vendas-Produto-Cursos{
+    width: 100%;
+}
+
+.Div-About-Cards-Assinaturas-Produto{
+    max-width: 800px;
+}
+
+.Input-Renovacoes-Produto-Assinatura{
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.Layout-Detalhamento-Trafego{
+    margin-top: 56px;
+}
+
+.Layout-Tables-Detalhamento-Vendas-Perpetuo-Home{
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 51px;
+}
+
+/* .Detalhamento-Button-Perpetuo-Home{
+    margin-top: 44px;
+} */
+
+@media (min-width: 827px){
+
+.LI-Cards {
+max-width: 172px;
+}
+
+/* .Layout-Cards-Trafego-E-Organico{
+display: flex;
+flex-direction: row;
+gap: 12px;
+} */
+
+.Layout-Cards-Trafego-Direto{
+width: 50%;
+
+}
+
+.Second-Line-List-of-Cards-Home{
+/* justify-content: left; */
+justify-content: center;
+}
+
+.Layout-Cards-Organico{
+width: 50%;
+height: 50%;
+}
+
+.Layout-Graficos-Home{
+display: flex;
+flex-direction: row;
+column-gap: 24px;
+}
+
+.Tables-Classificacao-Vendas-Perpetuo-Home{
+    width: 90%;
+    max-width: 1152px;
+}
+
+.Layout-Descricao-Contato-Only-Tables{
+display: flex;
+flex-direction: row;
+column-gap: 24px;
+width: 100%;
+max-width: 1152px;
+}
+
+.Li-Item-Table-Trafego{
+
+    width: 48%;
+
+}
+
+.First-List-Tables-Trafego{
+
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 16px;
+}
+
+.numero-assinantes-assinantes-produto{
+    background-color: #F2F4F8;
+    border-radius: 12px;
+}
+
+.numero-assinantes-pagos-assinantes-produto{
+    background-color: #F2F4F8;
+    border-radius: 12px;
+}
+
+.Third-Div-Cursos-Produto{
+    gap: 24px;
+    max-width: 1152px;
+}
+
+.Second-Div-Graphs-Assinantes-Produto{
+    max-width: 1152px;    
+}
+
+#Tabela-Detalhamento-Vencimento-Produto-Assinaturas{
+    width: 100%;
+}
+
+#Tabela-Detalhamento-Vencimento-Produto-Cursos{
+    width: 100%;
+}
+
+.Btn-And-Table{
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    max-width: 1152px;
+}
+
+.Information-Card{
+    width: 270px;
+}
+
+
+.Div-Graphs-Assinaturas{
+    width: 100%;
+}
+
+.First-Div-Graphs-Assinantes-Produto{
+    max-width: 1152px;
+}
+
+.Div-Cards-Assinatura-Produtos{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.Div-With-Detalhamento-Compradores{
+    margin-top: 62px;
+}
+
+}
+
+@media (min-width: 900px){
+
+    .First-Line-List-of-Cards-Lancamento{
+
+        column-gap: 24px;
+    }
+
+    .LI-Cards {
+    max-width: 160px;
+    }
+
+
+}
+
+
+@media (min-width: 1260px){
+
+    
+.First-Big-Container{
+    padding: 91px 31px 0px 31px;
+    margin: 0;
+    }
+
+.nav-bar{
+    display: none;
+}
+
+
+.First-Big-Card{
+
+background-color: #F2F4F8;
+margin: 16px;
+width: 304px;
+height: 1734px;
+border-radius: 24px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+
+}
+
+.Logout-in-Card{
+    height: 32px;
+    width: 81px;
+    margin: 0px 38px 28px 16px;
+}
+
+.Main-Menu-Div-in-First-Container{
+display: none;
+}
+
+.First-Div-App{
+display: flex;
+
+} 
+
+.Second-Big-Div-in-First-Container{
+width: 100%;
+margin: 0;
+padding: 0;
+display: flex;
+
+}
+
+.Loading-Refresh-Pages{
+width: 100%;
+}
+
+
+.Layout-Cards-Geral-Line{
+    max-width: 1200px;
+}
+
+/* .Layout-Cards-Trafego-E-Organico{
+    max-width: 882px;
+} */
+
+.Layout-Graficos-Home{
+    max-width: 1152px;
+}
+
+.Layout-Plataforma-de-Vendas-Table{
+    max-width: 1152px;
+}
+
+.Layout-Descricao-Contato-Home{
+    max-width: 1152px;
+}
+
+.Layout-Tabelas-Organico{
+    max-width: 1152px;
+}
+
+.First-Main-Div-Vendas{
+    max-width: 1152px;
+}
+
+.Li-Item-Table-Trafego{
+    padding: 0;
+    max-width: 560px;
+}
+
+.First-List-Tables-Trafego{
+
+    column-gap: 32px;
+
+}
+
+.Layout-Tabela-Detalhamento{
+    max-width: 1152px;
+}
+
+.Layout-Table-Leads, .Layout-Graficos-Leads{
+    max-width: 1152px
+}
+
+.graficos-socios-economicos{
+    width: 368px;
+    height: 392px;
+}
+
+.LI-Cards-Graphs{
+    width: 368px;
+    height: 392px;
+}
+
+.grafico-numeros-assinantes-produto, .grafico-vencimentos-assinaturas-produto{
+    width: 564px;
+    height: 418px;
+}
+
+.First-Div-Graphs-Assinantes-Produto{
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    
+}
+
+/* .Third-Div-Cursos-Produto{
+    display: flex;
+    align-items: start;
+
+} */
+
+.Second-Graph-Visualizacoes-Produto{
+    width: 100%;
+    display: flex;
+    max-width: 1152px;
+    gap: 24px;
+}
+
+.Div-Progresso-Cursos-Produtos{
+    width: 100%;
+    max-width: 662px;
+}
+
+.Div-Modulos-Cursos-Produtos{
+    width: 100%;
+    max-width: 466px;
+    
+}
+
+}
+
+/* DASHBOARD LANÇAMENTO */
+
+.Titles-Graphs-in-Box{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.Dias-Captacao-Meta{
+    font-family: Red Hat Display;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0em;
+    color: #4D5358;
+}
+
+.First-Line-List-of-Cards-Home-Lancamento{
+
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 16px;
+    justify-content: center;
+    max-width: 858px;
+
+    
+}
+
+.Div-With-Graph-Captação-Lançamento{
+    width: 100%;
+    max-width: 858px;
+    border-radius: 12px;
+    background-color: #F2F4F8; 
+    padding: 32px;
+
+}
+
+
+
+.First-Line-List-of-Cards-Vertical{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    /* gap: 16px; */
+    justify-content: space-around;
+}
+
+.Div-With-Cards-Lançamento-Captação-Vertical{
+    margin-top: 20px;
+    border-radius: 12px;
+    background-color: #F2F4F8; 
+    padding: 16px;
+}
+
+.Body-With-Colors-in-Card{
+        color: var(--Neutral-Foreground-Rest, #878D96);
+    font-family: "Red Hat Display";
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 135%;
+    letter-spacing: 0.76px;
+}
+
+.First-Div-Tables-Detalhamento-Lançamento{
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+#Tabela-Detalhamento-Captacao-Lancamento{
+    max-width: 1080px;
+}
+
+#Tabela-Detalhamento-Captacao-Perpetuo{
+    max-width: 1080px;
+}
+
+#Tabela-Detalhamento-Trackeamento-Lancamento{
+    max-width: 1080px;
+}
+
+@media (min-width: 827px){
+
+    .LI-Cards-With-Imput{
+        width: 214.5px;
+    }
+    
+    .Div-With-Cards-Lançamento-Captação-Vertical{
+        margin-top: 0px;
+    }
+
+    .Div-Main-Around-Graph-Cards-Lançamento-Captação{
+        display: flex;
+        gap: 20px;
+    }
+    
+
+    .First-Line-List-of-Cards-Vertical{
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 8px;
+        row-gap: 32px;
+        justify-content: center;
+        padding-top: 20px;
+    }
+
+    .custom-card-vertical{
+        border: #F2F4F8;
+        background-color: #F2F4F8;
+        border: none;
+        width: 100%;
+        border: none;
+    }
+    
+    .custom-card-header-vertical{
+        background-color: #F2F4F8;
+        margin-bottom: 10px;
+    }
+    
+    .custom-card-body-vertical{
+        padding: 0;
+    }
+    
+    .custom-card-title-vertical{
+
+        font-size: 14px;
+
+    }
+    
+    .custom-card-text-vertical{
+
+        font-size: 24px;
+
+    }
+
+    .LI-Cards-Vertical{
+        max-width: 172px;
+    }
+
+}
+
+@media (min-width: 1260px){
+
+    .Div-With-Cards-Lançamento-Captação-Vertical{
+        max-width: 172px;
+    }
+
+}
+    
+
+/* DASH LANÇAMENTO CAPTACAO*/
+
+.First-Div-Captacao-Lancamento{
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 1152px;
+}
+
+.First-Main-Div-Captacao-Lancamento{
+    display: flex;
+    flex-direction: column;
+    row-gap: 72px;
+}
+
+.Div-With-Graph-Segmentacao-Lançamento{
+    width: 100%;
+    max-width: 850px;
+    border-radius: 12px;
+    background-color: #F2F4F8; 
+    padding: 32px;
+}
+
+.Div-Around-Graph-Segmentacao-Tabela-Captacao{
+    display: flex; 
+    gap: 32px;
+}
+
+.Div-Betwen-List-Cards-Det-Vendas{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* DASH MERCADO AO VIVO */
+
+.Select-menu-outer{
+    background:#131516 !important;
+}
+
+.Select-menu-outer ::-webkit-scrollbar-track{
+    background: rgb(59, 59, 59);
+}
+
+.Select-menu-outer ::-webkit-scrollbar{
+    width: 10px;
+}
+
+.Select-menu-outer ::-webkit-scrollbar-thumb{
+    background: rgb(255, 255, 255);
+}
+
+.Select-value-label{
+    color: #F2F4F8 !important;
+}
+
+.subtitulos-dash{
+    font-size: 20px; 
+    font-weight: 700; 
+    background-color: #212946; 
+    width: 100%; 
+    height: 39px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    border-radius: 8px;
+    color: #F2F4F8;
+    margin-top: 24px;
+    
+}
+
+.categorias-dash{
+
+    font-size: 18px;
+    font-weight: 700;
+    border: 1px solid #08F7FE; 
+    height: 39px;
+    padding: 0px;
+    margin: 12px 0px 0px 0px;
+    border-radius: 8px;
+    text-align: center;
+    color: #F2F4F8;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+
+    
+}
+
+.local-noticias{
+
+    font-size: 24px;
+    font-weight: 700;
+    border: 1px solid #08F7FE; 
+    padding: 0px;
+    margin: 12px 0px 0px 0px;
+    border-radius: 8px;
+    text-align: center;
+    color: #F2F4F8;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    height: 64px
+}
+
+.classe-noticias{
+
+    font-size: 38px;
+    font-weight: 700;
+    padding: 0px;
+    margin: 15px 0px 15px 8px;
+    text-align: left;
+    color: #00F0C9;
+    height: 50px;
+    width: 160px
+
+}
+
+#escolher-grafico-aovivo{
+
+    margin-top: 26px;
+    width: 100%;
+    max-width: 140px;
+
+}
+
+.links-noticias{
+
+    text-decoration: inherit;
+    color: inherit;
+    cursor: auto;
+    cursor: pointer; 
+    text-align: left;
+    
+}
+
+.links-noticias :hover{
+
+    color: #B0B7BE;
+}
+
+.manchete{
+
+    font-size: 16px;
+    font-weight: 700; 
+    display: -webkit-box; 
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: #F2F4F8;
+    
+
+}
+
+.h3-noticias{
+
+    font-size: 12px;
+    font-weight: 500;
+    color: #B0B7BE;
+}
+
+
+#Tabela-Detalhamento-Resultados-Gerais-Debriefing{
+    width: 100%;
+    max-width: 560px; 
+
+}
+
+#Tabela-Detalhamento-Origem-de-Vendas-Lancamento-Debriefing{
+    width: 100%;
+    max-width: 560px;
+}
+
+.Div-With-Two-Tables{
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    width: 100%;
+    max-width: 1152px;
+}
+
+.Div-Inside-Div-With-Table{
+    width: 100%;
+    max-width: 560px; 
+}
+
+.Select-menu-outer {
+    display: block !important;
+    width: 240px !important;
+}
+
+
+/* Altera a cor das palavras dentro do dropdown */
+.Select-option {
+    color: #000000 !important;  /* Define a cor do texto como preto */
+    font-family: 'Red Hat Display', sans-serif;
+    overflow-x: hidden !important;
+}
+
+/* Altera a cor de fundo da janela do dropdown */
+.Select-menu-outer {
+    background-color: #F2F4F8 !important;  /* Define o fundo como branco */
+    border: 1px solid #CCCCCC;  /* Adiciona uma borda cinza clara ao dropdown */
+}
+
+/* Altera a cor do texto e o fundo quando o item do dropdown está selecionado */
+.Select-option.is-selected {
+    background-color: #F2F4F8 !important;  /* Fundo da opção selecionada */
+    color: #000000 !important;  /* Cor do texto da opção selecionada */
+}
+
+/* Altera a cor do texto e o fundo quando o item do dropdown está em foco */
+.Select-option.is-focused {
+    background-color: #E5E7EB !important;  /* Fundo da opção focada */
+    color: #000000 !important;  /* Cor do texto da opção focada */
+}
+
+.Select-value-label {
+    color: gray !important;  /* Altera a cor do texto selecionado */
+    font-family: 'Red Hat Display', sans-serif;  /* Mantém a consistência da fonte */
+}
+
+.Div-Dropdown-UTM-Lançamento-Debriefing{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    margin-bottom: 10px;
+}
+
+.Div-Dropdown-UTM-Perpetuo-Home{
+    display: flex;
+    flex-direction: row;
+    padding: 0px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    column-gap: 10px;
+}
+
+.Layout-Detalhamento-UTM-New{
+    display: flex;
+    flex-direction: row;
+    padding: 0px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.List-of-Dropdowns-in-Trafego-New{
+    display: flex;
+    flex-direction: row;
+    padding: 0px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    row-gap: 25px;
+    column-gap: 10px;
+}
+
+.Class-With-Title-And-Div-Home-Perpetuo-Trafego{
+    width: 100%;
+    max-width: 1152px;
+}
+
+.Layout-Grafico-De-Funil-Trafego-Home-Perpetuo{
+    padding: 16px;
+    border-radius: 12px;
+    background-color: #F2F4F8;
+    width: 100%;
+    max-width: 1152px;
+}
