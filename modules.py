@@ -387,6 +387,18 @@ def _transform_data_to_dataframe(dados_lista, aluguel=False):
         
         return valor
 
+    def limpar_numero_ou_zero(valor):
+        if isinstance(valor, str):
+            if "-" not in valor:
+                valor = re.sub(r"[^0-9]", "", valor)  # Remove qualquer coisa que não seja número
+                return int(valor) if valor else 0
+            else:
+                valor = 0
+        else:
+            valor = 0
+            
+        return valor
+
     def limpar_numero(valor):
         if isinstance(valor, str):
             if "-" not in valor:
@@ -421,7 +433,7 @@ def _transform_data_to_dataframe(dados_lista, aluguel=False):
         'valor_condominio': limpar_preco,
         'iptu': limpar_preco,
         'banheiros': limpar_numero,
-        'vagas_de_carro': limpar_numero,
+        'vagas_de_carro': limpar_numero_ou_zero,
         'quartos': limpar_numero,
         'suites': limpar_numero,
         'mobiliado': limpar_booleano,
@@ -453,7 +465,8 @@ def _transform_data_to_dataframe(dados_lista, aluguel=False):
         "elevador",      # Indicação se o imóvel tem elevador
         "jardim",        # Indicação se o imóvel tem jardim
         "quadra_esportiva",# Indicação se o imóvel tem quadra esportiva
-        "academia",      # Indicação se o imóvel tem academia
+        "academia",
+        "tipo"           # Tipo de imóvel
     ]
 
     colunas_renomeadas = {
