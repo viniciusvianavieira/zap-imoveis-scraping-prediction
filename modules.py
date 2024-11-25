@@ -358,12 +358,13 @@ def _transform_data_to_dataframe(dados_lista, aluguel=False):
         commercial_keywords = ["loja", "conjunto", "sala", "galpao", "laje", "terreno"]
         
         # Check if the URL contains any keywords for each property type
-        if any(keyword in url for keyword in residential_keywords):
-            return "Residential"
-        elif any(keyword in url for keyword in commercial_keywords):
-            return "Commercial"
-        else:
-            return "Not identified"
+        for keyword in residential_keywords:
+            if keyword in url:
+                return "residencial", keyword
+        for keyword in commercial_keywords:
+            if keyword in url:
+                return "comercial", keyword
+        return "nao_identificado", np.nan
 
     def limpar_preco(valor):
 
@@ -466,6 +467,7 @@ def _transform_data_to_dataframe(dados_lista, aluguel=False):
         "jardim",        # Indicação se o imóvel tem jardim
         "quadra_esportiva",# Indicação se o imóvel tem quadra esportiva
         "academia",
+        "finalidade",    # Finalidade do imóvel
         "tipo"           # Tipo de imóvel
     ]
 
@@ -502,7 +504,7 @@ def _transform_data_to_dataframe(dados_lista, aluguel=False):
         if coluna in dados_resumidos.columns:
             dados_resumidos[coluna] = dados_resumidos[coluna].apply(funcao)
 
-    dados_resumidos["tipo"] = dados_resumidos["url"].apply(_apply_identify_property_type)
+    dados_resumidos["finalidade"], dados_resumidos["tipo"] = zip(*dados_resumidos["url"].apply(_apply_identify_property_type))
 
     colunas_existentes = [coluna for coluna in colunas_organizadas if coluna in dados_resumidos.columns]
     dados_resumidos_organizado = dados_resumidos[colunas_existentes]

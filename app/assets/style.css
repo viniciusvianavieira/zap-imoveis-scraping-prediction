@@ -734,6 +734,17 @@ max-width: 1152px;
     background-color: #F2F4F8;
     border-radius: 16px;
     padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.Title-About-Graph{
+    font-family: "Red Hat Display";
+    font-size: 22px;
+    font-weight: 700;
+    color: #4D5358;
+    margin-bottom: 16px;
 }
 
 .Layout-Cards-Trafego-E-Organico{
