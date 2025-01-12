@@ -21,6 +21,7 @@ import numpy as np
 import datetime
 import pytz
 
+
 warnings.filterwarnings("ignore")
 
 # Função para retornar um driver do selenium configurado para webscraping.
@@ -510,3 +511,5 @@ def _transform_data_to_dataframe(dados_lista, aluguel=False):
     dados_resumidos_organizado = dados_resumidos[colunas_existentes]
 
     return dados_resumidos_organizado
+
+
