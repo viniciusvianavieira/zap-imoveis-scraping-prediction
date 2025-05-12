@@ -138,5 +138,5 @@ In this case, the neural network outperformed the other models in predictive pow
 
 - **Python**
 - **Pandas**, **NumPy**, **Seaborn**, **Matplotlib**
-- **Scikit-learn**, **XGBoost**, **Keras**
+- **Scikit-learn**, **XGBoost**, **Keras**, **TensorFlow**
 - **BeautifulSoup**, **Requests** (Web Scraping)
